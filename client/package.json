@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "elucidat-javascript-test": "https://github.com/shorif2000/elucidat-javascript-test/",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
-    "react-seatmap": "^0.1.2"
+    "react-seatmap": "https://github.com/shorif2000/react-seatmap"
   },
   "scripts": {
     "start-frontend": "react-scripts start",
