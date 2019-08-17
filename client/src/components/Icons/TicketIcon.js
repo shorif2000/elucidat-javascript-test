@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 class TicketIcon extends Component {
   render() {
-    const { width, height, seatNumber, price, available } = this.props;
+    const { width, seatNumber, price, available } = this.props;
     return (
       <svg
         version="1.1"

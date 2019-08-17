@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Seatmap from 'react-seatmap';
-import style from '../../style/main.scss';
+import '../../style/main.scss';
 import seats from '../../seatData';
 import Ticket from '../Ticket';
 
@@ -41,6 +41,7 @@ class Booking extends Component {
         rows[index] = [];
       }
       rows[index].push(seat);
+      return true;
     });
     
     return rows;
