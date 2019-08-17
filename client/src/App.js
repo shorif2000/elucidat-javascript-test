@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 //import './App.css';
-import Map from './components/Map';
+import Booking from './components/Booking';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-            Cinema Seating
-        </header>
-	<Map />
+	<Booking />
       </div>
     );
   }
