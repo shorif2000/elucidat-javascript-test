@@ -23,7 +23,7 @@ describe('Booking', () => {
   });
 
   it("must render a loading span before api call success", () => {
-   // expect(wrapper.find("span.loading").length).toBe(1);
+    // expect(wrapper.find("span.loading").length).toBe(1);
   });
 
   it("componentDidMount", (done) => {
@@ -34,8 +34,7 @@ describe('Booking', () => {
         status: 200,
         json: () => {
           return Promise.resolve({
-            userName: "manas",
-            userId: 1
+            seats:{} 
           });
         }
       });
@@ -65,7 +64,7 @@ describe('Booking', () => {
     const wrapper = shallow(<Booking />); 
                             
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith('http://http://52.56.180.211');
+    expect(global.fetch).toHaveBeenCalledWith('http://52.56.180.211');
 
     process.nextTick(() => { 
       expect(wrapper.state()).toEqual({

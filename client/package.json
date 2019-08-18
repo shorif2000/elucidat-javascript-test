@@ -1,11 +1,10 @@
 {
   "name": "elucidat-javascript-test",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "bootstrap": "^4.3.1",
-    "elucidat-javascript-test": "https://github.com/shorif2000/elucidat-javascript-test/",
     "enzyme-adapter-react-16": "^1.14.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
@@ -16,8 +15,7 @@
   "scripts": {
     "start-frontend": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "eject": "react-scripts eject"
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "react-app"
