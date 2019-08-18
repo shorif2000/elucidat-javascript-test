@@ -4,13 +4,17 @@ Basic front end to select seat booking. Shows layout of seat booking and when a 
 
 # Assumptions
 
-Kept as basic as possible without spending too much time
+Kept as basic as possible without spending too much effort
 
 Data is providied in specific ordering
 
 No specific seat plan layouts
 
+User only able to click 1 seat at a time
+
 Simple mount test and component render included
+
+
 
 # Set up
 
