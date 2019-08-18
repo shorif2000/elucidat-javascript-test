@@ -10,7 +10,11 @@ Data is providied in specific ordering
 
 No specific seat plan layouts
 
+User only able to click 1 seat at a time
+
 Simple mount test and component render included
+
+
 
 # Set up
 
