@@ -10,6 +10,8 @@ Data is providied in specific ordering
 
 No specific seat plan layouts
 
+Simple mount test and component render included
+
 # Set up
 
 Clone repo
