@@ -21,9 +21,12 @@ class Booking extends Component {
     this.removeSeatCallback = this.removeSeatCallback.bind(this);
   }
 
-  componentDidMount(){
-    //load data
-    fetch(window.location.protocol + window.location.hostname)
+  controller = new AbortController();
+
+  async fetchData() {
+    await fetch(window.location.protocol + window.location.hostname,{
+      signal: this.controller.signal
+    })
       .then(res => seats)
       .then(
         (result) => {
@@ -39,6 +42,14 @@ class Booking extends Component {
           });
         }
       );
+  }
+
+  async componentDidMount(){
+    await this.fetchData();
+  }
+
+  componentWillUnmount() {
+    this.controller.abort();
   }
 
   getIndexFromLetter(letter) {

@@ -1,5 +1,7 @@
 module.exports = {
-  presets: ['@babel/preset-env', '@babel/preset-react'],
+  presets: [['@babel/preset-env', {
+      "useBuiltIns": "entry"
+    }], '@babel/preset-react'],
   env: {
     test: {
       presets: [
@@ -10,6 +12,11 @@ module.exports = {
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-transform-modules-commonjs',
         'babel-plugin-dynamic-import-node',
+        ["@babel/plugin-transform-runtime",
+          {
+            "regenerator": true
+          }
+        ]
       ],
     },
   },

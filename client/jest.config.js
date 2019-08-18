@@ -1,5 +1,4 @@
 module.exports = {
-  verbose: true,
   "collectCoverageFrom": [
     "!/node_modules/*"
   ],
