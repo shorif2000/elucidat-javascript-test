@@ -13,4 +13,7 @@ module.exports = {
     "^.+\\.jsx?$": "./wrapper.js",
     "^.+\\.(js|jsx|ts)$": "babel-jest",
   },
+  "setupFiles": [
+    "./setupJest.js"
+  ]
 };

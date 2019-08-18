@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "elucidat-javascript-test": "https://github.com/shorif2000/elucidat-javascript-test/",
+    "enzyme-adapter-react-16": "^1.14.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -33,9 +34,9 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.4.2",
+    "enzyme": "^3.10.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.9.0",
+    "jest-fetch-mock": "^2.1.2",
     "react-test-renderer": "^16.9.0"
   }
 }

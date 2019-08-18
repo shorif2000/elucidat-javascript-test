@@ -13,7 +13,8 @@ class Booking extends Component {
       row: null,
       number: null,
       data: [],
-      selected: null
+      selected: null,
+      isLoaded: false
     }
 
     this.addSeatCallback = this.addSeatCallback.bind(this);
@@ -22,8 +23,22 @@ class Booking extends Component {
 
   componentDidMount(){
     //load data
-    const data = this.formatSeatData(seats);    
-    this.setState({data});
+    fetch(window.location.protocol + window.location.hostname)
+      .then(res => seats)
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            data: this.formatSeatData(result)
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      );
   }
 
   getIndexFromLetter(letter) {
@@ -49,20 +64,16 @@ class Booking extends Component {
 
   addSeatCallback(row, number) {
     const { data } = this.state;
-    console.log(row, number);
     const index = this.getIndexFromLetter(row);
-    console.log(data[index][number-1]) 
     this.setState({ row, number, selected: data[index][number-1] });
   }
 
   removeSeatCallback(row, number) {
-    console.log(row, number)
     this.setState({row: null, number: null, selected: null});
   }
   
   render() {
     const { data, selected } = this.state; 
-    console.log(selected) 
     if(Object.keys(data).length>0){
       return (
         <div className="container-fluid text-center">
