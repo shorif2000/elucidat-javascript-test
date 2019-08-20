@@ -27,9 +27,9 @@ router.post(
 );
 
 router.get(
-  "/availableSeats/:disabled",
+  "/availableSeats/:disabled?",
   [
-    check("disabled").optional()
+    check("disabled").optional().isBoolean().toBoolean()
   ],
   actions.fetch_available
 );

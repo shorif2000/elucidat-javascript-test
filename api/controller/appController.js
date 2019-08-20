@@ -40,9 +40,8 @@ exports.fetch_available = (req, res) => {
     res.status(422).json( err );
     return;
   }
-  const disabled = req.params.disabled !== '' ? req.params.disabled : false;
-console.log("disabled", disabled)
-  Seat.getSeatByAvailability(disabled, (err, seat) => {
+  const disabled = req.params.disabled !== undefined ? req.params.disabled : null;
+  Seat.getSeatByAvailability(req.params.disabled, (err, seat) => {
     if (err) res.json(err);
     else res.json(seat);
   });

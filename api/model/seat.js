@@ -51,7 +51,7 @@ Seat.bookSeat = function(seatNumber, result) {
 
 
 Seat.getSeatByAvailability = function(disabled, result) {
-  const seats = file.filter( seat  =>  seat.available && seat.disabilityAccessible == disabled ).map( seat => seat.seatNumber );
+  const seats = file.filter( seat  =>  (disabled === undefined && seat.available) || ( seat.available && disabled !== undefined && seat.disabilityAccessible == disabled) ).map( seat => seat.seatNumber );
   if ( Object.keys(seats.length > 0 )) {
     result(null, seats);
   } else {
