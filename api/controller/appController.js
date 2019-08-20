@@ -32,3 +32,19 @@ exports.update_seat = (req, res) => {
   });
 };
 
+exports.fetch_available = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const err =  errors.array();
+    err[0].error = true;
+    res.status(422).json( err );
+    return;
+  }
+  const disabled = req.params.disabled !== '' ? req.params.disabled : false;
+console.log("disabled", disabled)
+  Seat.getSeatByAvailability(disabled, (err, seat) => {
+    if (err) res.json(err);
+    else res.json(seat);
+  });
+};
+

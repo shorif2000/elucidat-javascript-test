@@ -14,8 +14,8 @@ router.get(
   actions.fetch_seat
 );
 
-router.get(
-  "/bookSeat/:seatNumber",
+router.post(
+  "/bookSeat",
   [
     check("seatNumber")
       .exists(true)
@@ -25,6 +25,15 @@ router.get(
   ],
   actions.update_seat
 );
+
+router.get(
+  "/availableSeats/:disabled",
+  [
+    check("disabled").optional()
+  ],
+  actions.fetch_available
+);
+
 
 module.exports = router;
 
