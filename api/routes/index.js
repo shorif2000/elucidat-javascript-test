@@ -35,5 +35,11 @@ router.get(
 );
 
 
+router.get(
+  "/cheapestSeat",
+  actions.fetch_cheapest_seat
+);
+
+
 module.exports = router;
 

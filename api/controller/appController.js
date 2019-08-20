@@ -47,3 +47,12 @@ exports.fetch_available = (req, res) => {
   });
 };
 
+
+
+exports.fetch_cheapest_seat = (req, res) => {
+  Seat.getSeatByPrice( (err, seat) => {
+    if (err) res.json(err);
+    else res.json(seat);
+  });
+};
+

@@ -53,12 +53,17 @@ Seat.bookSeat = function(seatNumber, result) {
 Seat.getSeatByAvailability = function(disabled, result) {
   const seats = file.filter( seat  =>  (disabled === undefined && seat.available) || ( seat.available && disabled !== undefined && seat.disabilityAccessible == disabled) ).map( seat => seat.seatNumber );
   if ( Object.keys(seats.length > 0 )) {
-    result(null, seats);
+    result(null, {seats: seats} );
   } else {
     result({ error: true, message: "Seat not found" });
   }
 };
 
+
+Seat.getSeatByPrice = function(result) {
+  const seats = file.filter( seat => seat.price.replace(/[^0-9.-]+/g,"") == Math.min(...file.map(function ( seat ) { return Number(seat.price.replace(/[^0-9.-]+/g,"")) }) ) ).map(seat => seat.seatNumber); 
+  result(null,{seats: seats});
+};
 
 module.exports = Seat;
 
