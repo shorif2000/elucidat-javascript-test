@@ -18,6 +18,9 @@
     "test": "react-scripts test",
     "start-backend": "nodemon ./bin/www"
   },
+  "nodemonConfig": {
+	 "ignore": ["*.json"]
+  },
   "eslintConfig": {
     "extends": "react-app"
   },

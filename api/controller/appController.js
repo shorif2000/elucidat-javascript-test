@@ -5,7 +5,10 @@ const { validationResult } = require("express-validator");
 exports.fetch_seat = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ error: true, message: errors.array() });
+    const err =  errors.array();
+    err[0].error = true;
+    res.status(422).json( err );
+    return;	  
   }
 
   Seat.getSeatByNumber(req.params.seatNumber, (err, seat) => {
@@ -17,7 +20,10 @@ exports.fetch_seat = (req, res) => {
 exports.update_seat = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ error: true, message: errors.array() });
+    const err = errors.array();
+    err[0].error = true; 
+    res.status(422).json( err );
+    return;
   }
 
   Seat.bookSeat(req.params.seatNumber, (err, seat) => {
