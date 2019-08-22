@@ -14,7 +14,7 @@ router.get(
   actions.fetch_seat
 );
 
-router.(
+router.post(
   "/bookSeat",
   [
     check("seatNumber")
