@@ -6,7 +6,7 @@ Basic front end to select seat booking. Shows layout of seat booking and when a 
 
 Kept as basic as possible without spending too much effort
 
-Data is providied in specific ordering
+Data is provided in specific ordering
 
 No specific seat plan layouts
 
