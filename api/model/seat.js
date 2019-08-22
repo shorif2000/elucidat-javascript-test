@@ -37,7 +37,6 @@ Seat.getSeatByNumber = function(seatNumber, result, next) {
   try {
     this.findSeat("seatNumber", seatNumber)
       .then(seat => {
-        console.log(seat);
         if (seat !== undefined && Object.keys(seat).length > 0) {
           return result(null, seat);
         } else {

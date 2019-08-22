@@ -15,11 +15,13 @@
   },
   "scripts": {
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "start-backend": "nodemon ./bin/www"
   },
   "nodemonConfig": {
-	 "ignore": ["*.json"]
+    "ignore": [
+      "*.json"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,6 +33,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0",
     "morgan": "^1.9.1"
   }
 }
