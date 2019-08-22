@@ -14,8 +14,8 @@ router.get(
   actions.fetch_seat
 );
 
-router.get(
-  "/bookSeat/:seatNumber",
+router.(
+  "/bookSeat",
   [
     check("seatNumber")
       .exists(true)
