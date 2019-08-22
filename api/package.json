@@ -10,13 +10,12 @@
     "express-validator": "^6.1.1",
     "helmet": "^3.20.0",
     "lowdb": "^1.0.0",
-    "nodemon": "^1.18.11",
-    "react-scripts": "2.1.8"
+    "nodemon": "^1.18.11"
   },
   "scripts": {
-    "build": "react-scripts build",
-    "test": "jest",
-    "start-backend": "nodemon ./bin/www"
+    "test": "jest --detectOpenHandles",
+    "start-backend": "NODE_ENV=production nodemon ./bin/www",
+    "start-dev":"NODE_ENV=development nodemon ./bin/www --trace-sync-io"
   },
   "nodemonConfig": {
     "ignore": [
@@ -26,12 +25,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
