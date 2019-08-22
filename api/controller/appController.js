@@ -2,56 +2,46 @@ const Seat = require("../model/seat.js");
 
 const { validationResult } = require("express-validator");
 
-exports.fetch_seat = (req, res) => {
+exports.fetch_seat = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const err =  errors.array();
+    const err = errors.array();
     err[0].error = true;
-    res.status(422).json( err );
-    return;	  
+    next(err);
+    return;
   }
 
   Seat.getSeatByNumber(req.params.seatNumber, (err, seat) => {
-    if (err) res.json(err);
+    if (err) next(err);
     else res.json(seat);
   });
 };
 
-exports.update_seat = (req, res) => {
+exports.update_seat = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const err = errors.array();
-    err[0].error = true; 
-    res.status(422).json( err );
+    err[0].error = true;
+    next(err);
     return;
   }
 
   Seat.bookSeat(req.params.seatNumber, (err, seat) => {
-    if (err) res.json(err);
+    if (err) next(err);
     else res.json(seat);
   });
 };
 
-exports.fetch_available = (req, res) => {
+exports.fetch_available = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const err =  errors.array();
+    const err = errors.array();
     err[0].error = true;
-    res.status(422).json( err );
+    next(err);
     return;
   }
-  const disabled = req.params.disabled !== undefined ? req.params.disabled : null;
   Seat.getSeatByAvailability(req.params.disabled, (err, seat) => {
-    if (err) res.json(err);
-    else res.json(seat);
-  });
-};
-
-
-
-exports.fetch_cheapest_seat = (req, res) => {
-  Seat.getSeatByPrice( (err, seat) => {
-    if (err) res.json(err);
+    if (err) next(err);
     else res.json(seat);
   });
 };

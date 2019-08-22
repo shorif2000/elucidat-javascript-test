@@ -22,62 +22,70 @@ Seat.findSeat = function(key, value) {
     }
     resolve(seat);
   });
-  /*
-  this.seat = file.find(obj => obj[key] === value);
-  return this.seat;
-  */
 };
 
 Seat.getSeatByNumber = function(seatNumber, result, next) {
   try {
-    this.seat = this.findSeat("seatNumber", seatNumber)
+    this.findSeat("seatNumber", seatNumber)
       .then(seat => {
         console.log(seat);
         if (seat !== undefined && Object.keys(seat).length > 0) {
-          result(null, seat);
+          return result(null, seat);
         } else {
-          result({ error: true, message: "Seat not found" });
+          return result({
+            error: true,
+            message: "Seat not found",
+            status: 404
+          });
         }
       })
-      .catch(next);
+      .catch(error => {
+        console.log(error);
+        console.log("1st catch");
+        return result(error, null);
+      });
   } catch (error) {
-    //next(error);
+    console.log("outer catch");
     console.log(error);
+    return result(error);
   }
-  /*  if (this.seat !== undefined && Object.keys(this.seat).length > 0) {
-    result(null, this.seat);
-  } else {
-    result({ error: true, message: "Seat not found" });
-  }*/
 };
 
 Seat.bookSeat = function(seatNumber, result) {
-  this.seat = this.findSeat("seatNumber", seatNumber);
-  if (this.seat === undefined || Object.keys(this.seat).length === 0) {
-    result({ error: true, message: "Seat not found" });
-  }
-  if (!this.seat.available) {
-    result({ error: true, message: "Seat unavailable to book" });
-  }
-  const newSeatData = file.map(row => {
-    if (row.seatNumber === seatNumber) {
-      row.available = false;
-      this.seat = row;
-    }
-    return row;
-  });
-  fs.writeFileSync(
-    "./model/seatData.json",
-    JSON.stringify(newSeatData, null, 2),
-    "utf-8",
-    function(err) {
-      if (err) {
-        result({ error: true, message: "failed to update booking" });
+  this.findSeat("seatNumber", seatNumber)
+    .then(seat => {
+      console.log(seat);
+      if (seat === undefined || Object.keys(seat).length === 0) {
+        return result({ error: true, message: "Seat not found" });
       }
-    }
-  );
+      if (!seat.available) {
+        return result({ error: true, message: "Seat unavailable to book" });
+      }
+      const newSeatData = file.map(row => {
+        if (row.seatNumber === seatNumber) {
+          row.available = false;
+          seat = row;
+        }
+        return row;
+      });
+      fs.writeFileSync(
+        "./model/seatData.json",
+        JSON.stringify(newSeatData, null, 2),
+        "utf-8",
+        function(err) {
+          if (err) {
+            return result({ error: true, message: "failed to update booking" });
+          }
+        }
+      );
 
-  result(null, this.seat);
+      return result(null, seat);
+    })
+    .catch(error => {
+      console.log(error);
+      console.log("1st catch");
+      return result(error, null);
+    });
 };
 
 Seat.getSeatByAvailability = function(disabled, result) {

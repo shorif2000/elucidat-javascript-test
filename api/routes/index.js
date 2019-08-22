@@ -14,8 +14,8 @@ router.get(
   actions.fetch_seat
 );
 
-router.post(
-  "/bookSeat",
+router.get(
+  "/bookSeat/:seatNumber",
   [
     check("seatNumber")
       .exists(true)
