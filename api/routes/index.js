@@ -29,17 +29,15 @@ router.get(
 router.get(
   "/availableSeats/:disabled?",
   [
-    check("disabled").optional().isBoolean().toBoolean()
+    check("disabled")
+      .optional()
+      .isBoolean()
+      .toBoolean()
   ],
   actions.fetch_available
 );
 
-
-router.get(
-  "/cheapestSeat",
-  actions.fetch_cheapest_seat
-);
-
+router.get("/cheapestSeat", actions.fetch_cheapest_seat);
 
 module.exports = router;
 
