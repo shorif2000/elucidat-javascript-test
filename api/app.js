@@ -29,9 +29,9 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-console.log('apperro' , err.message)
+  console.log('apperro' , err)
   res.status(err.status || 500);
-  res.json({ error: err.message });
+  res.json({ error: err.message || err.msg });
 });
 
 module.exports = app;

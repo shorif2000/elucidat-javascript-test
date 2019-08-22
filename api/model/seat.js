@@ -1,6 +1,5 @@
 const fs = require("fs");
 const fileName = "./seatData.json";
-const file = require(fileName);
 
 const Seat = function(seat) {
   this.seat = seat.seat;
@@ -12,15 +11,25 @@ const Seat = function(seat) {
 
 Seat.findSeat = function(key, value) {
   return new Promise((resolve, reject) => {
-    const seat = file.find(r => r[key] === value);
-    if (!seat) {
+    try {
+      const file = require(fileName);
+
+      const seat = file.find(r => r[key] === value);
+      if (!seat) {
+        reject({
+          error: true,
+          message: "Seat not found",
+          status: 404
+        });
+      }
+      resolve(seat);
+    } catch (error) {
       reject({
         error: true,
-        message: "Seat not found",
+        message: error.message,
         status: 404
       });
     }
-    resolve(seat);
   });
 };
 
@@ -40,13 +49,13 @@ Seat.getSeatByNumber = function(seatNumber, result, next) {
         }
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
         console.log("1st catch");
         return result(error, null);
       });
   } catch (error) {
     console.log("outer catch");
-    console.log(error);
+    //console.log(error);
     return result(error);
   }
 };

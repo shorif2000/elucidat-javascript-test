@@ -7,8 +7,8 @@ exports.fetch_seat = (req, res, next) => {
   if (!errors.isEmpty()) {
     const err = errors.array();
     err[0].error = true;
-    next(err);
-    return;
+    err[0].status = 422;
+    return next(err[0]);
   }
 
   Seat.getSeatByNumber(req.params.seatNumber, (err, seat) => {
@@ -22,8 +22,8 @@ exports.update_seat = (req, res, next) => {
   if (!errors.isEmpty()) {
     const err = errors.array();
     err[0].error = true;
-    next(err);
-    return;
+    err[0].status = 422;
+    return next(err[0]);
   }
 
   Seat.bookSeat(req.params.seatNumber, (err, seat) => {
@@ -37,8 +37,8 @@ exports.fetch_available = (req, res, next) => {
   if (!errors.isEmpty()) {
     const err = errors.array();
     err[0].error = true;
-    next(err);
-    return;
+    err[0].status = 422; 
+    return next(err);
   }
   Seat.getSeatByAvailability(req.params.disabled, (err, seat) => {
     if (err) next(err);
