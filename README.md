@@ -6,7 +6,7 @@ Basic front end to select seat booking. Shows layout of seat booking and when a 
 
 Kept as basic as possible without spending too much effort
 
-Data is providied in specific ordering
+Data is provided in specific ordering
 
 No specific seat plan layouts
 
@@ -14,9 +14,16 @@ User only able to click 1 seat at a time
 
 Simple mount test and component render included
 
+frontend and backend are not integrated in this app.
+
+using json file
+
+To allow non blocking request all requests should be async'ed using `Promise` or `Bluebird` or anythign else suitable as `express` is single-threaded
 
 
-# Set up
+# Frontend
+
+## Set up
 
 Clone repo
 
@@ -28,4 +35,20 @@ yarn
 yarn start-frontend
 ```
 
+
 a demo can be found here http://52.56.180.211:3003/
+
+# Backend
+
+## Set up
+
+```bash
+cd api
+yarn
+yarn start-backend
+```
+
+
+
+a demo can be found here http://52.56.180.211:9013
+
