@@ -26,7 +26,7 @@ exports.update_seat = (req, res, next) => {
     return next(err[0]);
   }
 
-  Seat.bookSeat(req.params.seatNumber, (err, seat) => {
+  Seat.bookSeat(req.body.seatNumber, (err, seat) => {
     if (err) next(err);
     else res.json(seat);
   });

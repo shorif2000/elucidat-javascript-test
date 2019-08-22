@@ -18,7 +18,7 @@ Seat.findSeat = function(key, value) {
       if (!seat) {
         reject({
           error: true,
-          message: "Seat not found",
+          message: "Seat " + value + " not found",
           status: 404
         });
       }
@@ -42,7 +42,7 @@ Seat.getSeatByNumber = function(seatNumber, result, next) {
         } else {
           return result({
             error: true,
-            message: "Seat not found",
+            message: "Seat " + seatNumber + " not found",
             status: 404
           });
         }
@@ -60,13 +60,20 @@ Seat.getSeatByNumber = function(seatNumber, result, next) {
 };
 
 Seat.bookSeat = function(seatNumber, result) {
+  console.log("seatNumber", seatNumber);
   this.findSeat("seatNumber", seatNumber)
     .then(seat => {
       if (seat === undefined || Object.keys(seat).length === 0) {
-        return result({ error: true, message: "Seat not found" });
+        return result({
+          error: true,
+          message: "Seat " + seatNumber + " not found"
+        });
       }
       if (!seat.available) {
-        return result({ error: true, message: "Seat unavailable to book" });
+        return result({
+          error: true,
+          message: "Seat " + seatNumber + " unavailable to book"
+        });
       }
       try {
         const file = require(fileName);
@@ -85,7 +92,7 @@ Seat.bookSeat = function(seatNumber, result) {
             if (err) {
               return result({
                 error: true,
-                message: "failed to update booking"
+                message: "failed to update booking for " + seatNumber
               });
             }
           }
@@ -122,7 +129,7 @@ Seat.getSeatByAvailability = function(disabled, result) {
     if (Object.keys(seats.length > 0)) {
       result(null, { seats: seats });
     } else {
-      result({ error: true, message: "Seat not found" });
+      result({ error: true, message: "Seats not found" });
     }
   } catch (error) {
     return {

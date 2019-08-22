@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "FileSync": "^1.0.1",
+    "async": "^3.1.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "express-async-handler": "^1.1.4",
     "express-validator": "^6.1.1",
     "helmet": "^3.20.0",
     "lowdb": "^1.0.0",
@@ -15,7 +17,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles",
     "start-backend": "NODE_ENV=production nodemon ./bin/www",
-    "start-dev":"NODE_ENV=development nodemon ./bin/www --trace-sync-io"
+    "start-dev": "NODE_ENV=development nodemon ./bin/www --trace-sync-io"
   },
   "nodemonConfig": {
     "ignore": [
