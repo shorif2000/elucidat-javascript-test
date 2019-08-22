@@ -63,32 +63,43 @@ Seat.getSeatByNumber = function(seatNumber, result, next) {
 Seat.bookSeat = function(seatNumber, result) {
   this.findSeat("seatNumber", seatNumber)
     .then(seat => {
-      console.log(seat);
       if (seat === undefined || Object.keys(seat).length === 0) {
         return result({ error: true, message: "Seat not found" });
       }
       if (!seat.available) {
         return result({ error: true, message: "Seat unavailable to book" });
       }
-      const newSeatData = file.map(row => {
-        if (row.seatNumber === seatNumber) {
-          row.available = false;
-          seat = row;
-        }
-        return row;
-      });
-      fs.writeFileSync(
-        "./model/seatData.json",
-        JSON.stringify(newSeatData, null, 2),
-        "utf-8",
-        function(err) {
-          if (err) {
-            return result({ error: true, message: "failed to update booking" });
+      try {
+        const file = require(fileName);
+        const newSeatData = file.map(row => {
+          if (row.seatNumber === seatNumber) {
+            row.available = false;
+            seat = row;
           }
-        }
-      );
+          return row;
+        });
+        fs.writeFileSync(
+          "./model/seatData.json",
+          JSON.stringify(newSeatData, null, 2),
+          "utf-8",
+          function(err) {
+            if (err) {
+              return result({
+                error: true,
+                message: "failed to update booking"
+              });
+            }
+          }
+        );
 
-      return result(null, seat);
+        return result(null, seat);
+      } catch (error) {
+        return {
+          error: true,
+          message: error.message,
+          status: 404
+        };
+      }
     })
     .catch(error => {
       console.log(error);
@@ -98,19 +109,28 @@ Seat.bookSeat = function(seatNumber, result) {
 };
 
 Seat.getSeatByAvailability = function(disabled, result) {
-  const seats = file
-    .filter(
-      seat =>
-        (disabled === undefined && seat.available) ||
-        (seat.available &&
-          disabled !== undefined &&
-          seat.disabilityAccessible === disabled)
-    )
-    .map(seat => seat.seatNumber);
-  if (Object.keys(seats.length > 0)) {
-    result(null, { seats: seats });
-  } else {
-    result({ error: true, message: "Seat not found" });
+  try {
+    const file = require(fileName);
+    const seats = file
+      .filter(
+        seat =>
+          (disabled === undefined && seat.available) ||
+          (seat.available &&
+            disabled !== undefined &&
+            seat.disabilityAccessible === disabled)
+      )
+      .map(seat => seat.seatNumber);
+    if (Object.keys(seats.length > 0)) {
+      result(null, { seats: seats });
+    } else {
+      result({ error: true, message: "Seat not found" });
+    }
+  } catch (error) {
+    return {
+      error: true,
+      message: error.message,
+      status: 404
+    };
   }
 };
 
@@ -134,9 +154,18 @@ const bestSeats = seats => {
 };
 
 Seat.getSeatByPrice = function(result) {
-  const seats = bestSeats(file);
-  console.log(seats);
-  result(null, { seats: seats });
+  try {
+    const file = require(fileName);
+    const seats = bestSeats(file);
+    console.log(seats);
+    result(null, { seats: seats });
+  } catch (error) {
+    return {
+      error: true,
+      message: error.message,
+      status: 404
+    };
+  }
 };
 
 module.exports = Seat;
