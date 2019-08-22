@@ -36,6 +36,8 @@ yarn start-frontend
 ```
 
 
+a demo can be found here http://52.56.180.211:3003/
+
 # Backend
 
 ## Set up
@@ -48,5 +50,5 @@ yarn start-backend
 
 
 
+a demo can be found here http://52.56.180.211:9013
 
-a demo can be found here http://52.56.180.211:3003/
