@@ -43,7 +43,7 @@ frontend and backend are not integrated in this app.
 
 using json file
 
-To allow non blocking request all requests should be async'ed using `Promise` or `Bluebird` or anythign else suitable as `express` is single-threaded
+To allow non blocking request all requests should be async'ed using `Promise` or `Bluebird` or anything else suitable as `express` is single-threaded
 
 
 # Frontend
