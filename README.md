@@ -37,7 +37,7 @@ No specific seat plan layouts
 
 User only able to click 1 seat at a time
 
-Simple mount test and component render included
+Basic render and integration test
 
 frontend and backend are not integrated in this app.
 
