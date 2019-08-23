@@ -1,5 +1,5 @@
 const fs = require("fs");
-const fileName = "./seatData.json";
+const fileName = "./model/seatData.json";
 
 const Seat = function(seat) {
   this.seat = seat.seat;
@@ -12,17 +12,25 @@ const Seat = function(seat) {
 Seat.findSeat = function(key, value) {
   return new Promise((resolve, reject) => {
     try {
-      const file = require(fileName);
-
-      const seat = file.find(r => r[key] === value);
-      if (!seat) {
-        reject({
-          error: true,
-          message: "Seat " + value + " not found",
-          status: 404
-        });
-      }
-      resolve(seat);
+      fs.readFile(fileName, "utf-8", (err, data) => {
+        if (err) {
+          reject({
+            error: true,
+            message: err.message,
+            status: 404
+          });
+        }
+        const jsonData = JSON.parse(data);
+        const seat = jsonData.find(r => r[key] === value);
+        if (!seat) {
+          reject({
+            error: true,
+            message: "Seat " + value + " not found",
+            status: 404
+          });
+        }
+        resolve(seat);
+      });
     } catch (error) {
       reject({
         error: true,
@@ -34,23 +42,23 @@ Seat.findSeat = function(key, value) {
 };
 
 Seat.getSeatByNumber = function(seatNumber, result, next) {
-    this.findSeat("seatNumber", seatNumber)
-      .then(seat => {
-        if (seat !== undefined && Object.keys(seat).length > 0) {
-          return result(null, seat);
-        } else {
-          return result({
-            error: true,
-            message: "Seat " + seatNumber + " not found",
-            status: 404
-          });
-        }
-      })
-      .catch(error => {
-        //console.log(error);
-        console.log("1st catch");
-        return result(error, null);
-      });
+  this.findSeat("seatNumber", seatNumber)
+    .then(seat => {
+      if (seat !== undefined && Object.keys(seat).length > 0) {
+        return result(null, seat);
+      } else {
+        return result({
+          error: true,
+          message: "Seat " + seatNumber + " not found",
+          status: 404
+        });
+      }
+    })
+    .catch(error => {
+      //console.log(error);
+      console.log("1st catch");
+      return result(error, null);
+    });
 };
 
 Seat.bookSeat = function(seatNumber, result) {
@@ -70,29 +78,43 @@ Seat.bookSeat = function(seatNumber, result) {
         });
       }
       try {
-        const file = require(fileName);
-        const newSeatData = file.map(row => {
-          if (row.seatNumber === seatNumber) {
-            row.available = false;
-            seat = row;
-          }
-          return row;
-        });
-        fs.writeFileSync(
-          "./model/seatData.json",
-          JSON.stringify(newSeatData, null, 2),
-          "utf-8",
-          function(err) {
-            if (err) {
-              return result({
+        fs.readFile(fileName, "utf-8", (err, data) => {
+          if (err) {
+            return result(
+              {
                 error: true,
-                message: "failed to update booking for " + seatNumber
-              });
-            }
+                message: err.message,
+                status: 404
+              },
+              null
+            );
           }
-        );
+          const jsonData = JSON.parse(data);
 
-        return result(null, seat);
+          const newSeatData = jsonData.map(row => {
+            if (row.seatNumber === seatNumber) {
+              row.available = false;
+              seat = row;
+            }
+            return row;
+          });
+
+          fs.writeFile(
+            "./model/seatData.json",
+            JSON.stringify(newSeatData, null, 2),
+            "utf-8",
+            function(err) {
+              if (err) {
+                return result({
+                  error: true,
+                  message: "failed to update booking for " + seatNumber
+                });
+              }
+            }
+          );
+
+          return result(null, seat);
+        });
       } catch (error) {
         return {
           error: true,
@@ -110,21 +132,33 @@ Seat.bookSeat = function(seatNumber, result) {
 
 Seat.getSeatByAvailability = function(disabled, result) {
   try {
-    const file = require(fileName);
-    const seats = file
-      .filter(
-        seat =>
-          (disabled === undefined && seat.available) ||
-          (seat.available &&
-            disabled !== undefined &&
-            seat.disabilityAccessible === disabled)
-      )
-      .map(seat => seat.seatNumber);
-    if (Object.keys(seats.length > 0)) {
-      result(null, { seats: seats });
-    } else {
-      result({ error: true, message: "Seats not found" });
-    }
+    fs.readFile(fileName, "utf-8", (err, data) => {
+      if (err) {
+        return result(
+          {
+            error: true,
+            message: err.message,
+            status: 404
+          },
+          null
+        );
+      }
+      const jsonData = JSON.parse(data);
+      const seats = jsonData
+        .filter(
+          seat =>
+            (disabled === undefined && seat.available) ||
+            (seat.available &&
+              disabled !== undefined &&
+              seat.disabilityAccessible === disabled)
+        )
+        .map(seat => seat.seatNumber);
+      if (Object.keys(seats.length > 0)) {
+        result(null, { seats: seats });
+      } else {
+        result({ error: true, message: "Seats not found" });
+      }
+    });
   } catch (error) {
     return {
       error: true,
@@ -155,10 +189,21 @@ const bestSeats = seats => {
 
 Seat.getSeatByPrice = function(result) {
   try {
-    const file = require(fileName);
-    const seats = bestSeats(file);
-    console.log(seats);
-    result(null, { seats: seats });
+    fs.readFile(fileName, "utf-8", (err, data) => {
+      if (err) {
+        return result(
+          {
+            error: true,
+            message: err.message,
+            status: 404
+          },
+          null
+        );
+      }
+      const jsonData = JSON.parse(data);
+      const seats = bestSeats(jsonData);
+      return result(null, { seats: seats });
+    });
   } catch (error) {
     return {
       error: true,
