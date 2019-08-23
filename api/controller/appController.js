@@ -1,8 +1,9 @@
+const asyncHandler = require('express-async-handler')
 const Seat = require("../model/seat.js");
 
 const { validationResult } = require("express-validator");
 
-exports.fetch_seat = (req, res, next) => {
+exports.fetch_seat = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const err = errors.array();
@@ -15,9 +16,9 @@ exports.fetch_seat = (req, res, next) => {
     if (err) next(err);
     else res.json(seat);
   });
-};
+});
 
-exports.update_seat = (req, res, next) => {
+exports.update_seat = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const err = errors.array();
@@ -30,9 +31,9 @@ exports.update_seat = (req, res, next) => {
     if (err) next(err);
     else res.json(seat);
   });
-};
+});
 
-exports.fetch_available = (req, res, next) => {
+exports.fetch_available = asyncHandler(async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const err = errors.array();
@@ -44,12 +45,12 @@ exports.fetch_available = (req, res, next) => {
     if (err) next(err);
     else res.json(seat);
   });
-};
+});
 
-exports.fetch_cheapest_seat = (req, res, next) => {
+exports.fetch_cheapest_seat = asyncHandler(async (req, res, next) => {
   Seat.getSeatByPrice((err, seat) => {
     if (err) next(err);
     else res.json(seat);
   });
-};
+});
 
