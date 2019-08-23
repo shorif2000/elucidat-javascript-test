@@ -147,9 +147,9 @@ Seat.getSeatByAvailability = function(disabled, result) {
       const seats = jsonData
         .filter(
           seat =>
-            (disabled === undefined && seat.available) ||
+            ( (disabled === undefined || disabled === false) && seat.available) ||
             (seat.available &&
-              disabled !== undefined &&
+              disabled !== undefined && disabled &&
               seat.disabilityAccessible === disabled)
         )
         .map(seat => seat.seatNumber);
@@ -200,6 +200,7 @@ Seat.getSeatByPrice = function(result) {
           null
         );
       }
+	    console.log(data);
       const jsonData = JSON.parse(data);
       const seats = bestSeats(jsonData);
       return result(null, { seats: seats });

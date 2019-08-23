@@ -39,9 +39,10 @@ exports.fetch_available = asyncHandler(async (req, res, next) => {
     const err = errors.array();
     err[0].error = true;
     err[0].status = 422; 
-    return next(err);
+    return next(err[0]);
   }
-  Seat.getSeatByAvailability(req.params.disabled, (err, seat) => {
+	console.log(req);
+  Seat.getSeatByAvailability(req.params.disabled || req.query.disabled, (err, seat) => {
     if (err) next(err);
     else res.json(seat);
   });
