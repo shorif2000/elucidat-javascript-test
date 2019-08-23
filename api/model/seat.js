@@ -34,7 +34,6 @@ Seat.findSeat = function(key, value) {
 };
 
 Seat.getSeatByNumber = function(seatNumber, result, next) {
-  try {
     this.findSeat("seatNumber", seatNumber)
       .then(seat => {
         if (seat !== undefined && Object.keys(seat).length > 0) {
@@ -52,11 +51,6 @@ Seat.getSeatByNumber = function(seatNumber, result, next) {
         console.log("1st catch");
         return result(error, null);
       });
-  } catch (error) {
-    console.log("outer catch");
-    //console.log(error);
-    return result(error);
-  }
 };
 
 Seat.bookSeat = function(seatNumber, result) {
