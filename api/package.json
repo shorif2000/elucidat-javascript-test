@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "FileSync": "^1.0.1",
-    "async": "^3.1.0",
+    "async": "^3.2.2",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
